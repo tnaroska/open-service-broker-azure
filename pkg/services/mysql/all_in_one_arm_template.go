@@ -58,6 +58,20 @@ var allInOneARMTemplateBytes = []byte(`
 					}
 				},
 				{{end}}
+				{{range .virtualNetworkRules}}
+  				{
+  					"type": "virtualNetworkRules",
+  					"apiVersion": "2017-12-01",
+  					"dependsOn": [
+ 						"Microsoft.DBforMySQL/servers/{{ $.serverName }}"
+  					],
+  					"location": "{{$root.location}}",
+  					"name": "{{.name}}",
+  					"properties": {
+          				"virtualNetworkSubnetId": "{{.subnetId}}"
+  					}
+  				},
+				{{end}}
 				{
 					"apiVersion": "[variables('DBforMySQLapiVersion')]",
 					"name": "{{ .databaseName }}",
